@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT Solutions – Telecom Infrastructure · Networking · Security Systems</title>
+  <meta name="description" content="IT Solutions is Andaman & Nicobar Islands' premier telecom and IT infrastructure provider. BSNL Empaneled, Government Approved System Integrator since 2008." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              950: '#050d1a',
+              900: '#0a1628',
+              800: '#0f2040',
+              700: '#163058',
+              600: '#1e4278',
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #050d1a; color: #e2e8f0; overflow-x: hidden; }
+
+    /* ── Cursor glow ── */
+    #cursor-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 70%);
+      transition: opacity 0.3s ease;
+    }
+
+    /* ── Noise texture ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* ── Hero BG ── */
+    .hero-bg {
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(14,165,233,0.18) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 40% at 85% 50%, rgba(99,102,241,0.12) 0%, transparent 55%),
+                  radial-gradient(ellipse 60% 50% at 10% 80%, rgba(6,182,212,0.10) 0%, transparent 55%),
+                  #050d1a;
+    }
+
+    /* ── Hero grid ── */
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(14,165,233,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── Dot pattern ── */
+    .dot-pattern {
+      background-image: radial-gradient(rgba(14,165,233,0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    .stagger > *:nth-child(1) { transition-delay: 0ms; }
+    .stagger > *:nth-child(2) { transition-delay: 90ms; }
+    .stagger > *:nth-child(3) { transition-delay: 180ms; }
+    .stagger > *:nth-child(4) { transition-delay: 270ms; }
+    .stagger > *:nth-child(5) { transition-delay: 360ms; }
+    .stagger > *:nth-child(6) { transition-delay: 450ms; }
+    .stagger > *:nth-child(7) { transition-delay: 540ms; }
+    .stagger > *:nth-child(8) { transition-delay: 630ms; }
+
+    /* ── Glass ── */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .glass-strong {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ── Gradient text ── */
+    .grad-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .grad-text-cyan {
+      background: linear-gradient(90deg, #22d3ee 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ── Glow card ── */
+    .glow-card {
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .glow-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 0 1px rgba(14,165,233,0.35), 0 24px 70px rgba(14,165,233,0.13);
+      border-color: rgba(14,165,233,0.4) !important;
+    }
+
+    /* ── Tilt card ── */
+    .tilt-card { transform-style: preserve-3d; transition: transform 0.1s ease; }
+
+    /* ── Primary button ── */
+    .btn-primary {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 35px rgba(14,165,233,0.45); }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-primary i { position: relative; z-index: 1; }
+
+    /* ── Outline button ── */
+    .btn-outline {
+      border: 1px solid rgba(14,165,233,0.5);
+      color: #38bdf8;
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(14,165,233,0.1);
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(14,165,233,0.25);
+      transform: translateY(-2px);
+    }
+
+    /* ── Nav link ── */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -2px;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, #0ea5e9, #6366f1);
+      transition: width 0.3s ease;
+      border-radius: 999px;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ── Stat number ── */
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ── Section line ── */
+    .section-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(14,165,233,0.5), transparent);
+    }
+
+    /* ── Mobile nav ── */
+    #mobile-menu {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+      opacity: 0;
+    }
+    #mobile-menu.open { max-height: 600px; opacity: 1; }
+    .ham-line { display: block; width: 24px; height: 2px; background: #e2e8f0; border-radius: 2px; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
+    .ham.open .ham-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .ham.open .ham-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .ham.open .ham-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* ── Orbs ── */
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(80px);
+      pointer-events: none;
+    }
+    @keyframes floatOrb {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      33% { transform: translateY(-25px) translateX(12px); }
+      66% { transform: translateY(10px) translateX(-10px); }
+    }
+    .orb { animation: floatOrb 10s ease-in-out infinite; }
+
+    /* ── Icon ring ── */
+    .icon-ring {
+      width: 58px; height: 58px; border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(99,102,241,0.15));
+      border: 1px solid rgba(14,165,233,0.25);
+      transition: all 0.35s ease;
+    }
+    .glow-card:hover .icon-ring {
+      background: linear-gradient(135deg, rgba(14,165,233,0.28), rgba(99,102,241,0.28));
+      box-shadow: 0 0 25px rgba(14,165,233,0.3);
+      transform: scale(1.08) rotate(-3deg);
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #050d1a; }
+    ::-webkit-scrollbar-thumb { background: rgba(14,165,233,0.4); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(14,165,233,0.7); }
+
+    /* ── Cred badge ── */
+    .cred-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem; font-weight: 500; color: #94a3b8;
+      transition: all 0.3s ease;
+    }
+    .cred-badge:hover { background: rgba(14,165,233,0.1); border-color: rgba(14,165,233,0.4); color: #38bdf8; }
+
+    /* ── Ticker ── */
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .ticker-inner { display: flex; animation: ticker 32s linear infinite; width: max-content; }
+    .ticker-inner:hover { animation-play-state: paused; }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 32px; right: 32px; z-index: 9999;
+      transform: translateY(100px) scale(0.9);
+      opacity: 0; transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    #toast.show { transform: translateY(0) scale(1); opacity: 1; }
+
+    /* ── Floating particle dots ── */
+    .particle { position: absolute; border-radius: 50%; pointer-events: none; }
+
+    /* ── Service tab ── */
+    .service-tab { transition: all 0.3s ease; }
+    .service-tab.active {
+      background: linear-gradient(135deg, rgba(14,165,233,0.2), rgba(99,102,241,0.2));
+      border-color: rgba(14,165,233,0.5) !important;
+      color: white;
+    }
+    .service-panel { display: none; }
+    .service-panel.active { display: grid; }
+
+    /* ── Progress line ── */
+    @keyframes progressFill { from { width: 0; } to { width: var(--w); } }
+    .progress-bar { animation: progressFill 1.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+    /* ── Ripple ── */
+    @keyframes rippleOut {
+      0% { transform: scale(0.95); opacity: 0.5; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    .ripple-ring {
+      position: absolute; inset: -8px; border-radius: 50%;
+      border: 1px solid rgba(14,165,233,0.4);
+      animation: rippleOut 2s ease-out infinite;
+    }
+    .ripple-ring:nth-child(2) { animation-delay: 0.7s; }
+    .ripple-ring:nth-child(3) { animation-delay: 1.4s; }
+
+    /* ── Pulse dot ── */
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.7; }
+    }
+
+    /* ── Card shimmer ── */
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    .shimmer-line {
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(14,165,233,0.6), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    /* ── Typewriter cursor ── */
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .cursor { animation: blink 1s step-end infinite; }
+
+
+
+    /* ── Map grid ── */
+    .island-dot { transition: all 0.3s ease; cursor: pointer; }
+    .island-dot:hover circle { r: 8; }
+    .island-dot:hover text { font-weight: 600; fill: #38bdf8; }
+
+    @media (max-width: 640px) {
+      .hero-headline { font-size: 2.3rem !important; }
+    }
+  </style>
+  <style>
+    @media (max-width: 1024px) {
+      .hero-headline { font-size: clamp(2.5rem, 6vw, 4.25rem) !important; }
+    }
+
+    @media (max-width: 768px) {
+      #cursor-glow,
+      .orb {
+        display: none !important;
+      }
+
+      .hero-headline {
+        font-size: clamp(2.25rem, 10vw, 3.2rem) !important;
+        line-height: 1.08;
+      }
+
+      .cred-badge {
+        max-width: 100%;
+        white-space: normal;
+      }
+
+      .service-tab {
+        width: 100%;
+        justify-content: center;
+      }
+
+      #hero-card {
+        transform: none !important;
+      }
+
+      #home .relative.w-full.max-w-md {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      section[id],
+      section.relative.py-28,
+      section.relative.py-24,
+      section.relative.py-20 {
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
+      }
+
+      .hero-headline {
+        font-size: clamp(2rem, 11vw, 2.75rem) !important;
+      }
+
+      .ticker-inner {
+        animation-duration: 20s;
+      }
+
+      #home .grid.lg\:grid-cols-2,
+      #about .grid.lg\:grid-cols-2,
+      #services .grid.lg\:grid-cols-2,
+      #credentials .grid.lg\:grid-cols-2,
+      #clients .grid.lg\:grid-cols-3,
+      #contact .grid.lg\:grid-cols-3 {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+      }
+
+      #services .flex.flex-wrap.gap-3.justify-center.mb-10.reveal.stagger {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      #services #panel-all,
+      #credentials .grid.sm\:grid-cols-2.lg\:grid-cols-3,
+      #clients .grid.sm\:grid-cols-2.lg\:grid-cols-3,
+      #contact .grid.sm\:grid-cols-2.lg\:grid-cols-3 {
+        grid-template-columns: 1fr !important;
+      }
+
+      #home .flex.flex-wrap.gap-4.reveal > a {
+        width: 100%;
+        justify-content: center;
+      }
+
+      #home .absolute.-top-6.-right-6,
+      #home .absolute.-bottom-6.-left-6 {
+        display: none !important;
+      }
+
+      #home .grid.grid-cols-3.gap-3.mt-6.pt-6.border-t.border-white\/8 {
+        gap: 0.75rem;
+      }
+
+      #home .grid.grid-cols-3.gap-3.mt-6.pt-6.border-t.border-white\/8 > div p:first-child {
+        font-size: 1.35rem !important;
+      }
+
+      #credentials .grid.grid-cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+
+      #credentials .grid.grid-cols-3 > div {
+        min-width: 0;
+      }
+
+      #clients .glass.rounded-2xl.p-7.glow-card.reveal.flex.items-center.gap-5 {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      #clients .glass.rounded-full.px-8.py-4.flex.items-center.gap-3 {
+        border-radius: 1.25rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      #contact .glass-strong.rounded-3xl.p-10.reveal.text-center.relative.overflow-hidden {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="relative">
+
+  <!-- Cursor glow -->
+  <div id="cursor-glow"></div>
+
+  <!-- ════════ NAVBAR ════════ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-4">
+        <a href="#home" class="flex items-center gap-3 group">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="3" width="4" height="18" rx="1" fill="white"/>
+                <rect x="9" y="8" width="4" height="13" rx="1" fill="rgba(255,255,255,0.7)"/>
+                <rect x="16" y="12" width="4" height="9" rx="1" fill="rgba(255,255,255,0.5)"/>
+                <circle cx="19" cy="5" r="3" fill="#22d3ee"/>
+              </svg>
+            </div>
+            <div class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 border-2 border-navy-950" style="animation:pulseDot 2s ease-in-out infinite"></div>
+          </div>
+          <div>
+            <div class="font-display font-bold text-white text-lg leading-none tracking-tight">IT <span class="grad-text-cyan">Solutions</span></div>
+            <div class="text-xs text-slate-500 leading-none mt-0.5 tracking-wider">SOLUTIONS AHEAD</div>
+          </div>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#about" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">About</a>
+          <a href="#services" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">Services</a>
+          <a href="#credentials" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">Credentials</a>
+          <a href="#clients" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">Clients</a>
+          <a href="#contact" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors duration-200">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a href="tel:+919933273136" class="hidden sm:inline-flex items-center gap-2 btn-primary px-5 py-2.5 rounded-xl text-white text-sm font-semibold">
+            <i class="fa-solid fa-phone text-xs"></i>
+            <span>Call Now</span>
+          </a>
+          <button id="ham-btn" class="ham lg:hidden flex flex-col gap-1.5 p-2 focus:outline-none" aria-label="Toggle menu">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="lg:hidden glass-strong border-t border-white/8">
+      <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-1">
+        <a href="#about" class="mobile-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-3 rounded-xl transition-all duration-200 font-medium">About</a>
+        <a href="#services" class="mobile-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-3 rounded-xl transition-all duration-200 font-medium">Services</a>
+        <a href="#credentials" class="mobile-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-3 rounded-xl transition-all duration-200 font-medium">Credentials</a>
+        <a href="#clients" class="mobile-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-3 rounded-xl transition-all duration-200 font-medium">Clients</a>
+        <a href="#contact" class="mobile-link text-slate-300 hover:text-white hover:bg-white/5 px-4 py-3 rounded-xl transition-all duration-200 font-medium">Contact</a>
+        <div class="mt-3 pt-3 border-t border-white/8">
+          <a href="tel:+919933273136" class="btn-primary flex items-center justify-center gap-2 w-full py-3 rounded-xl text-white font-semibold">
+            <i class="fa-solid fa-phone text-xs"></i>
+            <span>+91 99332 73136</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════ HERO ════════ -->
+  <section id="home" class="relative min-h-[100svh] hero-bg hero-grid flex flex-col justify-center overflow-hidden pt-20">
+    <!-- Orbs -->
+    <div class="orb w-96 h-96 top-1/4 -left-32 opacity-25" style="background:rgba(14,165,233,0.35); animation-delay:0s; animation-duration:12s;"></div>
+    <div class="orb w-72 h-72 top-1/3 right-0 opacity-20" style="background:rgba(99,102,241,0.45); animation-delay:-4s; animation-duration:9s;"></div>
+    <div class="orb w-56 h-56 bottom-24 left-1/3 opacity-15" style="background:rgba(52,211,153,0.35); animation-delay:-7s; animation-duration:11s;"></div>
+
+    <!-- Particles -->
+    <div id="particles" class="absolute inset-0 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Left -->
+        <div>
+          <div class="inline-flex items-center gap-2 cred-badge mb-6 reveal">
+            <span class="w-2 h-2 rounded-full bg-emerald-400" style="animation:pulseDot 2s ease-in-out infinite"></span>
+            Serving Andaman &amp; Nicobar Islands Since 2008
+          </div>
+
+          <h1 class="hero-headline font-display font-bold text-5xl lg:text-6xl xl:text-7xl leading-tight text-white mb-6 reveal" style="transition-delay:80ms;">
+            Powering the Islands'<br/>
+            <span class="grad-text" id="typewriter-text"></span><span class="cursor text-cyan-400">|</span>
+          </h1>
+
+          <p class="text-lg text-slate-400 leading-relaxed max-w-xl mb-8 reveal" style="transition-delay:160ms;">
+            Telecom infrastructure, enterprise networking, and end-to-end security systems — delivered by Andaman &amp; Nicobar's most trusted Government-approved system integrator and BSNL empaneled vendor.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mb-10 reveal stagger" style="transition-delay:240ms;">
+            <span class="cred-badge"><i class="fa-solid fa-shield-halved text-cyan-400"></i> Govt. Approved Integrator</span>
+            <span class="cred-badge"><i class="fa-solid fa-certificate text-cyan-400"></i> BSNL Empaneled Vendor</span>
+            <span class="cred-badge"><i class="fa-solid fa-award text-cyan-400"></i> 15+ Years Experience</span>
+          </div>
+
+          <div class="flex flex-wrap gap-4 reveal" style="transition-delay:320ms;">
+            <a href="#services" class="btn-primary w-full sm:w-auto justify-center px-7 py-3.5 rounded-xl text-white font-semibold text-base flex items-center gap-2">
+              <span>Explore Services</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="tel:+919933273136" class="btn-outline w-full sm:w-auto justify-center px-7 py-3.5 rounded-xl font-semibold text-base flex items-center gap-2">
+              <i class="fa-solid fa-phone"></i>
+              <span>Call Us Now</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Live monitor card -->
+        <div class="relative flex justify-center items-center reveal-right">
+          <div class="relative w-full max-w-md">
+            <div class="glass-strong rounded-3xl p-8 relative z-10 overflow-hidden" id="hero-card">
+              <div class="shimmer-line"></div>
+              <div class="flex items-center justify-between mb-6">
+                <div>
+                  <p class="text-xs text-slate-500 uppercase tracking-widest mb-1">Infrastructure Status</p>
+                  <p class="font-display font-bold text-white text-xl">Live Network Monitor</p>
+                </div>
+                <div class="relative">
+                  <div class="ripple-ring"></div>
+                  <div class="ripple-ring"></div>
+                  <div class="ripple-ring"></div>
+                  <div class="w-12 h-12 rounded-2xl flex items-center justify-center relative z-10" style="background:linear-gradient(135deg,rgba(14,165,233,0.2),rgba(99,102,241,0.2));border:1px solid rgba(14,165,233,0.3);">
+                    <i class="fa-solid fa-wifi text-cyan-400 text-xl"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-5">
+                <div>
+                  <div class="flex justify-between text-xs mb-2"><span class="text-slate-400">Network Uptime</span><span class="text-emerald-400 font-bold">99.8%</span></div>
+                  <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 progress-bar" style="--w:99.8%; width:0%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-2"><span class="text-slate-400">CCTV Systems Active</span><span class="text-emerald-400 font-bold">98.2%</span></div>
+                  <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 progress-bar" style="--w:98.2%; width:0%; animation-delay:0.3s"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs mb-2"><span class="text-slate-400">Fire Alarm Coverage</span><span class="text-emerald-400 font-bold">100%</span></div>
+                  <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 progress-bar" style="--w:100%; width:0%; animation-delay:0.6s"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-3 mt-6 pt-6 border-t border-white/8">
+                <div class="text-center">
+                  <p class="stat-number text-2xl">15+</p>
+                  <p class="text-xs text-slate-500 mt-1">Years Active</p>
+                </div>
+                <div class="text-center">
+                  <p class="stat-number text-2xl">200+</p>
+                  <p class="text-xs text-slate-500 mt-1">Projects Done</p>
+                </div>
+                <div class="text-center">
+                  <p class="stat-number text-2xl">50+</p>
+                  <p class="text-xs text-slate-500 mt-1">Clients Served</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="absolute -top-6 -right-6 hidden md:flex glass rounded-2xl px-4 py-3 items-center gap-3 z-20 shadow-xl" style="animation:floatOrb 6s ease-in-out infinite">
+              <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+                <i class="fa-solid fa-check text-emerald-400 text-sm"></i>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-white">Govt. Approved</p>
+                <p class="text-xs text-slate-500">System Integrator</p>
+              </div>
+            </div>
+
+            <div class="absolute -bottom-6 -left-6 hidden md:flex glass rounded-2xl px-4 py-3 items-center gap-3 z-20 shadow-xl" style="animation:floatOrb 8s ease-in-out infinite; animation-delay:-3s;">
+              <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center">
+                <i class="fa-solid fa-signal text-cyan-400 text-sm"></i>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-white">BSNL Empaneled</p>
+                <p class="text-xs text-slate-500">BA Silver Category</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+      <span class="text-xs text-slate-500 tracking-widest uppercase">Scroll</span>
+      <div style="animation:floatOrb 1.5s ease-in-out infinite"><i class="fa-solid fa-chevron-down text-slate-500 text-xs"></i></div>
+    </div>
+  </section>
+
+  <!-- ════════ TICKER ════════ -->
+  <div class="relative z-10 py-5 border-y border-white/6 overflow-hidden" style="background:rgba(10,22,40,0.7)">
+    <div class="ticker-inner whitespace-nowrap">
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Telecom Infrastructure</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Wi-Fi &amp; Hotspot Deployment</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">CCTV Surveillance</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Fire Alarm Systems</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">IPPBX Communication</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Network Infrastructure</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Structured Cabling</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">AMC Services</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Telecom Infrastructure</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Wi-Fi &amp; Hotspot Deployment</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">CCTV Surveillance</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Fire Alarm Systems</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">IPPBX Communication</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Network Infrastructure</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">Structured Cabling</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+      <span class="mx-12 text-xs text-slate-500 tracking-widest uppercase font-semibold">AMC Services</span>
+      <span class="mx-2 text-cyan-700">◆</span>
+    </div>
+  </div>
+
+  <!-- ════════ ABOUT ════════ -->
+  <section id="about" class="relative py-28 bg-navy-950 overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-40"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Left: Stats + Island map SVG -->
+        <div class="reveal-left">
+          <div class="glass-strong rounded-3xl p-8">
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="glass rounded-2xl p-5 text-center glow-card">
+                <p class="stat-number text-4xl mb-1">2008</p>
+                <p class="text-xs text-slate-500">Year Founded</p>
+              </div>
+              <div class="glass rounded-2xl p-5 text-center glow-card">
+                <p class="stat-number text-4xl mb-1">15+</p>
+                <p class="text-xs text-slate-500">Years of Service</p>
+              </div>
+              <div class="glass rounded-2xl p-5 text-center glow-card">
+                <p class="stat-number text-4xl mb-1">50+</p>
+                <p class="text-xs text-slate-500">Clients Served</p>
+              </div>
+              <div class="glass rounded-2xl p-5 text-center glow-card">
+                <p class="stat-number text-4xl mb-1">6</p>
+                <p class="text-xs text-slate-500">Islands Covered</p>
+              </div>
+            </div>
+
+            <!-- Interactive island map -->
+            <div class="rounded-2xl overflow-hidden relative" style="height:200px; background:linear-gradient(135deg,rgba(14,165,233,0.06),rgba(99,102,241,0.06));border:1px solid rgba(14,165,233,0.15);">
+              <svg viewBox="0 0 400 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <!-- Dotted sea background -->
+                <defs>
+                  <pattern id="seaDots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="1" fill="rgba(14,165,233,0.1)"/>
+                  </pattern>
+                </defs>
+                <rect width="400" height="200" fill="url(#seaDots)"/>
+                
+                <!-- Connection lines -->
+                <line x1="100" y1="50" x2="160" y2="90" stroke="rgba(14,165,233,0.25)" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="160" y1="90" x2="200" y2="120" stroke="rgba(14,165,233,0.25)" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="200" y1="120" x2="240" y2="100" stroke="rgba(14,165,233,0.25)" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="200" y1="120" x2="180" y2="155" stroke="rgba(14,165,233,0.25)" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="200" y1="120" x2="310" y2="170" stroke="rgba(14,165,233,0.25)" stroke-width="1" stroke-dasharray="4,4"/>
+
+                <!-- Islands as interactive dots -->
+                <g class="island-dot" onclick="showIslandInfo('Port Blair')">
+                  <circle cx="100" cy="50" r="6" fill="rgba(14,165,233,0.8)" stroke="#38bdf8" stroke-width="1.5"/>
+                  <circle cx="100" cy="50" r="12" fill="rgba(14,165,233,0.15)"/>
+                  <text x="100" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Port Blair</text>
+                </g>
+                <g class="island-dot" onclick="showIslandInfo('Car Nicobar')">
+                  <circle cx="160" cy="90" r="5" fill="rgba(99,102,241,0.8)" stroke="#818cf8" stroke-width="1.5"/>
+                  <circle cx="160" cy="90" r="10" fill="rgba(99,102,241,0.15)"/>
+                  <text x="160" y="78" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Car Nicobar</text>
+                </g>
+                <g class="island-dot" onclick="showIslandInfo('Kamorta')">
+                  <circle cx="200" cy="120" r="5" fill="rgba(52,211,153,0.8)" stroke="#34d399" stroke-width="1.5"/>
+                  <circle cx="200" cy="120" r="10" fill="rgba(52,211,153,0.15)"/>
+                  <text x="215" y="117" text-anchor="start" font-size="9" fill="#94a3b8" font-family="Inter">Kamorta</text>
+                </g>
+                <g class="island-dot" onclick="showIslandInfo('Teressa')">
+                  <circle cx="240" cy="100" r="4" fill="rgba(251,191,36,0.8)" stroke="#fbbf24" stroke-width="1.5"/>
+                  <text x="255" y="97" text-anchor="start" font-size="9" fill="#94a3b8" font-family="Inter">Teressa</text>
+                </g>
+                <g class="island-dot" onclick="showIslandInfo('Katchal')">
+                  <circle cx="180" cy="155" r="4" fill="rgba(251,113,133,0.8)" stroke="#fb7185" stroke-width="1.5"/>
+                  <text x="150" y="170" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Katchal</text>
+                </g>
+                <g class="island-dot" onclick="showIslandInfo('Campbell Bay')">
+                  <circle cx="310" cy="170" r="4" fill="rgba(14,165,233,0.6)" stroke="#38bdf8" stroke-width="1.5"/>
+                  <text x="310" y="185" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Campbell Bay</text>
+                </g>
+
+                <text x="10" y="192" font-size="8" fill="rgba(14,165,233,0.4)" font-family="Inter">Andaman &amp; Nicobar Islands — Coverage Map</text>
+              </svg>
+              <div id="island-tooltip" class="absolute top-2 right-2 glass rounded-xl px-3 py-2 text-xs text-cyan-300 font-semibold hidden transition-all"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div class="reveal-right">
+          <p class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-4">Who We Are</p>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl text-white leading-tight mb-6">
+            The Islands' <span class="grad-text">IT Backbone</span> Since 2008
+          </h2>
+          <p class="text-slate-400 leading-relaxed mb-6">
+            IT Solutions is a telecom and IT infrastructure service provider headquartered in Port Blair, Andaman &amp; Nicobar Islands. Since 2008, we have been the region's most trusted partner for wireless communication systems, enterprise networking, CCTV surveillance, fire alarm systems, and fully integrated IT solutions.
+          </p>
+          <p class="text-slate-400 leading-relaxed mb-8">
+            With over 15 years of hands-on experience, we have delivered mission-critical projects for government institutions, hospitality groups, corporate organizations, and commercial establishments spanning the archipelago — from Port Blair to the remote islands of the Nicobar district.
+          </p>
+
+          <div class="space-y-3 mb-8 stagger">
+            <div class="flex items-center gap-3 reveal glass rounded-xl px-4 py-3 glow-card">
+              <div class="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-check text-cyan-400 text-xs"></i>
+              </div>
+              <span class="text-slate-300 text-sm font-medium">15+ years across Andaman &amp; Nicobar Islands</span>
+            </div>
+            <div class="flex items-center gap-3 reveal glass rounded-xl px-4 py-3 glow-card">
+              <div class="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-check text-cyan-400 text-xs"></i>
+              </div>
+              <span class="text-slate-300 text-sm font-medium">Proven government project execution capability</span>
+            </div>
+            <div class="flex items-center gap-3 reveal glass rounded-xl px-4 py-3 glow-card">
+              <div class="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-check text-cyan-400 text-xs"></i>
+              </div>
+              <span class="text-slate-300 text-sm font-medium">Strong technical expertise and certified team</span>
+            </div>
+            <div class="flex items-center gap-3 reveal glass rounded-xl px-4 py-3 glow-card">
+              <div class="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-check text-cyan-400 text-xs"></i>
+              </div>
+              <span class="text-slate-300 text-sm font-medium">Authorized dealer for ORBIT and QUTAK brands</span>
+            </div>
+          </div>
+
+          <a href="#services" class="btn-primary inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold">
+            <span>View Our Services</span>
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ VISION & MISSION ════════ -->
+  <section class="relative py-20 overflow-hidden" style="background:linear-gradient(180deg,#050d1a 0%,#0a1628 50%,#050d1a 100%);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="glass-strong rounded-3xl p-10 glow-card reveal relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:0.5s"></div>
+          <div class="w-14 h-14 rounded-2xl mb-6 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(14,165,233,0.2),rgba(99,102,241,0.2));border:1px solid rgba(14,165,233,0.3);">
+            <i class="fa-solid fa-eye text-cyan-400 text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-2xl text-white mb-4">Our Vision</h3>
+          <p class="text-slate-400 leading-relaxed text-lg">
+            To become the most trusted telecom and IT infrastructure solution provider across <span class="text-white font-semibold">India</span> — carrying the expertise built in the Andaman &amp; Nicobar Islands to every corner of the nation.
+          </p>
+        </div>
+        <div class="glass-strong rounded-3xl p-10 glow-card reveal relative overflow-hidden" style="transition-delay:120ms;">
+          <div class="shimmer-line" style="animation-delay:1.5s"></div>
+          <div class="w-14 h-14 rounded-2xl mb-6 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(52,211,153,0.2),rgba(14,165,233,0.2));border:1px solid rgba(52,211,153,0.3);">
+            <i class="fa-solid fa-rocket text-emerald-400 text-2xl"></i>
+          </div>
+          <h3 class="font-display font-bold text-2xl text-white mb-4">Our Mission</h3>
+          <p class="text-slate-400 leading-relaxed text-lg">
+            To deliver <span class="text-white font-semibold">innovative, reliable, and cost-effective</span> connectivity and security solutions for businesses and government institutions — ensuring every client stays connected, protected, and productive.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SERVICES ════════ -->
+  <section id="services" class="relative py-28 bg-navy-950 overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-30"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+      <div class="text-center mb-16 reveal">
+        <p class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-4">What We Do</p>
+        <h2 class="font-display font-bold text-4xl lg:text-5xl text-white mb-6">
+          End-to-End <span class="grad-text">IT & Telecom</span> Solutions
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto text-lg">
+          From wireless communication infrastructure to advanced security surveillance, we design, install, and maintain the systems that keep Andaman's businesses running.
+        </p>
+      </div>
+
+      <!-- Interactive service tabs -->
+      <div class="flex flex-wrap gap-3 justify-center mb-10 reveal stagger">
+        <button class="service-tab active glass px-5 py-2.5 rounded-xl text-sm font-medium text-slate-300 border border-white/8 flex items-center gap-2" data-panel="all">
+          <i class="fa-solid fa-grid-2 text-cyan-400 text-xs"></i> All Services
+        </button>
+        <button class="service-tab glass px-5 py-2.5 rounded-xl text-sm font-medium text-slate-300 border border-white/8 flex items-center gap-2" data-panel="telecom">
+          <i class="fa-solid fa-wifi text-cyan-400 text-xs"></i> Telecom
+        </button>
+        <button class="service-tab glass px-5 py-2.5 rounded-xl text-sm font-medium text-slate-300 border border-white/8 flex items-center gap-2" data-panel="security">
+          <i class="fa-solid fa-shield-halved text-emerald-400 text-xs"></i> Security
+        </button>
+        <button class="service-tab glass px-5 py-2.5 rounded-xl text-sm font-medium text-slate-300 border border-white/8 flex items-center gap-2" data-panel="network">
+          <i class="fa-solid fa-network-wired text-purple-400 text-xs"></i> Networking
+        </button>
+      </div>
+
+      <!-- All services grid -->
+      <div id="panel-all" class="service-panel active grid sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger">
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="telecom">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-wifi text-cyan-400 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">Wireless Communication</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Supply and installation of wireless communication equipment and enterprise-grade Wi-Fi networks and public hotspot deployments.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-cyan-500 font-medium">Telecom</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="security">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-camera text-indigo-400 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">CCTV Surveillance</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Complete CCTV surveillance installation, configuration, remote monitoring, and ongoing maintenance for hotels, businesses, and institutions.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-indigo-400 font-medium">Security</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="security">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-fire-flame-curved text-orange-400 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">Fire Alarm & Security</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Industrial-grade fire alarm systems, access control, and integrated security monitoring solutions tailored for commercial and institutional clients.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-orange-400 font-medium">Security</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="network">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-network-wired text-emerald-400 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">Network Infrastructure</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Enterprise networking design and deployment including structured cabling, LAN/WAN setup, switches, routers, and complete physical infrastructure.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-emerald-400 font-medium">Networking</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="telecom">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-phone-volume text-purple-400 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">IPPBX Communication</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">IPPBX systems, VOIP telephony, SIP trunk configuration, and IP phone installations for government offices and corporate environments across the islands.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-purple-400 font-medium">Telecom</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="network">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-server text-yellow-400 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">IT Hardware Supply</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Procurement, supply, and professional installation of servers, workstations, peripherals, and all IT hardware from certified brands and authorized channels.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-yellow-400 font-medium">Networking</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="network">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-screwdriver-wrench text-pink-400 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">AMC Services</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Annual Maintenance Contracts for all installed systems — covering preventive maintenance, 24/7 fault response, and regular health checks to maximize uptime.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-pink-400 font-medium">Maintenance</span>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-6 glow-card reveal" data-category="network">
+          <div class="icon-ring mb-5"><i class="fa-solid fa-cable-car text-cyan-300 text-2xl"></i></div>
+          <h3 class="font-display font-semibold text-white text-lg mb-3">Structured Cabling</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Professional structured cabling design and installation — CAT6, fibre optic, and custom runs for clean, scalable, and future-ready network environments.</p>
+          <div class="mt-4 pt-4 border-t border-white/8">
+            <span class="text-xs text-cyan-300 font-medium">Networking</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════ TELECOM & SECURITY DEEP DIVE ════════ -->
+  <section class="relative py-28 overflow-hidden" style="background:linear-gradient(135deg,#050d1a 0%,#0a1628 100%);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <div class="glass-strong rounded-3xl p-10 glow-card reveal-left relative overflow-hidden">
+          <div class="shimmer-line"></div>
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,rgba(14,165,233,0.2),rgba(99,102,241,0.2));border:1px solid rgba(14,165,233,0.3);">
+              <i class="fa-solid fa-tower-broadcast text-cyan-400 text-3xl"></i>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-2xl text-white">Telecom & Networking</h3>
+              <p class="text-slate-400 text-sm mt-1">Enterprise-grade connectivity solutions</p>
+            </div>
+          </div>
+          <p class="text-slate-400 leading-relaxed mb-6">
+            We provide comprehensive telecom infrastructure services designed for the unique geographic challenges of the Andaman &amp; Nicobar Islands — IPPBX, VOIP, SIP trunk, enterprise networking, and robust wireless connectivity.
+          </p>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-cyan-500/30 hover:bg-cyan-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-cyan-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">IPPBX &amp; VOIP Communication Systems</span>
+            </div>
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-cyan-500/30 hover:bg-cyan-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-cyan-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">SIP Trunk Configuration &amp; Management</span>
+            </div>
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-cyan-500/30 hover:bg-cyan-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-cyan-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">Enterprise Wi-Fi &amp; Hotspot Deployment</span>
+            </div>
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-cyan-500/30 hover:bg-cyan-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-cyan-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">LAN/WAN Network Design &amp; Implementation</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-strong rounded-3xl p-10 glow-card reveal-right relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:1s"></div>
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,rgba(52,211,153,0.2),rgba(14,165,233,0.2));border:1px solid rgba(52,211,153,0.3);">
+              <i class="fa-solid fa-shield-halved text-emerald-400 text-3xl"></i>
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-2xl text-white">Security & Surveillance</h3>
+              <p class="text-slate-400 text-sm mt-1">Protect what matters, always</p>
+            </div>
+          </div>
+          <p class="text-slate-400 leading-relaxed mb-6">
+            We install and maintain end-to-end security solutions for hotels, businesses, and institutions across the islands — HD CCTV, fire alarm systems, smart access control, and total peace of mind.
+          </p>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-emerald-500/30 hover:bg-emerald-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-emerald-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">CCTV Installation &amp; Remote Monitoring</span>
+            </div>
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-emerald-500/30 hover:bg-emerald-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-emerald-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">Industrial Fire Alarm Systems</span>
+            </div>
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-emerald-500/30 hover:bg-emerald-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-emerald-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">Access Control Systems</span>
+            </div>
+            <div class="flex items-center gap-3 glass rounded-xl px-4 py-3 transition-all hover:border-emerald-500/30 hover:bg-emerald-500/5" style="border:1px solid rgba(255,255,255,0.08)">
+              <i class="fa-solid fa-circle-dot text-emerald-500 text-xs flex-shrink-0"></i>
+              <span class="text-slate-300 text-sm">QUTAK Certified Security Devices</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ STATS ════════ -->
+  <section class="relative py-24 bg-navy-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-strong rounded-3xl px-8 py-16 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full opacity-8" style="background:radial-gradient(circle,#0ea5e9,transparent);pointer-events:none;"></div>
+        <div class="shimmer-line"></div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10 stagger">
+          <div class="text-center reveal">
+            <p class="stat-number text-6xl mb-3" data-target="15" data-suffix="+">0</p>
+            <div class="w-12 h-px mx-auto mb-3" style="background:linear-gradient(90deg,transparent,rgba(14,165,233,0.6),transparent)"></div>
+            <p class="text-slate-400 text-sm">Years of Industry Experience</p>
+          </div>
+          <div class="text-center reveal">
+            <p class="stat-number text-6xl mb-3" data-target="200" data-suffix="+">0</p>
+            <div class="w-12 h-px mx-auto mb-3" style="background:linear-gradient(90deg,transparent,rgba(99,102,241,0.6),transparent)"></div>
+            <p class="text-slate-400 text-sm">Projects Successfully Delivered</p>
+          </div>
+          <div class="text-center reveal">
+            <p class="stat-number text-6xl mb-3" data-target="50" data-suffix="+">0</p>
+            <div class="w-12 h-px mx-auto mb-3" style="background:linear-gradient(90deg,transparent,rgba(52,211,153,0.6),transparent)"></div>
+            <p class="text-slate-400 text-sm">Clients Across All Sectors</p>
+          </div>
+          <div class="text-center reveal">
+            <p class="stat-number text-6xl mb-3" data-target="6" data-suffix="">0</p>
+            <div class="w-12 h-px mx-auto mb-3" style="background:linear-gradient(90deg,transparent,rgba(251,191,36,0.6),transparent)"></div>
+            <p class="text-slate-400 text-sm">Nicobar Islands Serviced</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CREDENTIALS ════════ -->
+  <section id="credentials" class="relative py-28 overflow-hidden" style="background:linear-gradient(180deg,#050d1a 0%,#0a1628 100%);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-4">Certifications & Approvals</p>
+        <h2 class="font-display font-bold text-4xl lg:text-5xl text-white mb-6">
+          Trusted, Certified &amp; <span class="grad-text">Government Approved</span>
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto">
+          Our credentials speak for themselves. IT Solutions holds every certification required to execute government contracts and provide enterprise-grade technology services in the Andaman &amp; Nicobar Islands.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 stagger">
+        <div class="glass rounded-2xl p-7 glow-card reveal relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:0.2s"></div>
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:1px solid rgba(251,191,36,0.25);">
+              <i class="fa-solid fa-id-card text-yellow-400 text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">Dealer Possession License (DPL)</h4>
+              <p class="text-slate-400 text-sm">Issued by the Department of Telecommunications, Government of India, authorising supply of telecom equipment.</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:0.7s"></div>
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(14,165,233,0.05));border:1px solid rgba(14,165,233,0.25);">
+              <i class="fa-solid fa-handshake text-cyan-400 text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">Authorized Dealer – ORBIT</h4>
+              <p class="text-slate-400 text-sm">Officially authorized dealer for ORBIT Networking Products, ensuring genuine hardware and manufacturer warranty support.</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:1.2s"></div>
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(52,211,153,0.05));border:1px solid rgba(52,211,153,0.25);">
+              <i class="fa-solid fa-certificate text-emerald-400 text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">Certified Dealer – QUTAK</h4>
+              <p class="text-slate-400 text-sm">Certified dealer for QUTAK Security Devices, covering the full range of surveillance and access control products.</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:0.4s"></div>
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(99,102,241,0.05));border:1px solid rgba(99,102,241,0.25);">
+              <i class="fa-solid fa-tower-cell text-indigo-400 text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">BSNL System Integrator</h4>
+              <p class="text-slate-400 text-sm">Empaneled as a System Integrator under BA Silver Category in BSNL A&amp;N Telecom Circle for Customer Private Network infrastructure.</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:0.9s"></div>
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(251,113,133,0.15),rgba(251,113,133,0.05));border:1px solid rgba(251,113,133,0.25);">
+              <i class="fa-solid fa-building-columns text-rose-400 text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">GST Registered Business</h4>
+              <p class="text-slate-400 text-sm">Fully GST-compliant registered business entity, ensuring transparent and legally sound transactions for all clients.</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal relative overflow-hidden">
+          <div class="shimmer-line" style="animation-delay:1.4s"></div>
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:1px solid rgba(251,191,36,0.25);">
+              <i class="fa-solid fa-landmark-flag text-yellow-400 text-xl"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">Govt. Approved Integrator</h4>
+              <p class="text-slate-400 text-sm">Approved by A&amp;N Administration – Office of the Deputy Commissioner, Nicobar District for government-grade infrastructure projects.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flagship project -->
+      <div class="glass-strong rounded-3xl p-10 reveal relative overflow-hidden">
+        <div class="shimmer-line"></div>
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="inline-flex items-center gap-2 text-xs font-semibold text-yellow-400 tracking-widest uppercase mb-4">
+              <i class="fa-solid fa-star"></i> Flagship Government Project
+            </span>
+            <h3 class="font-display font-bold text-2xl text-white mb-4">
+              Nicobar District Administration — IPPBX Rollout
+            </h3>
+            <p class="text-slate-400 leading-relaxed">
+              Commissioned by the Andaman &amp; Nicobar Administration – Office of the Deputy Commissioner, Nicobar District, IT Solutions executed the supply and installation of a complete IPPBX communication system, IP phones, and structured cabling across multiple remote island locations.
+            </p>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="glass rounded-xl p-4 text-center glow-card"><i class="fa-solid fa-map-pin text-cyan-400 text-lg mb-2 block"></i><p class="text-white font-semibold text-sm">Car Nicobar</p></div>
+            <div class="glass rounded-xl p-4 text-center glow-card"><i class="fa-solid fa-map-pin text-cyan-400 text-lg mb-2 block"></i><p class="text-white font-semibold text-sm">Kamorta</p></div>
+            <div class="glass rounded-xl p-4 text-center glow-card"><i class="fa-solid fa-map-pin text-cyan-400 text-lg mb-2 block"></i><p class="text-white font-semibold text-sm">Teressa</p></div>
+            <div class="glass rounded-xl p-4 text-center glow-card"><i class="fa-solid fa-map-pin text-cyan-400 text-lg mb-2 block"></i><p class="text-white font-semibold text-sm">Chowra</p></div>
+            <div class="glass rounded-xl p-4 text-center glow-card"><i class="fa-solid fa-map-pin text-cyan-400 text-lg mb-2 block"></i><p class="text-white font-semibold text-sm">Katchal</p></div>
+            <div class="glass rounded-xl p-4 text-center glow-card"><i class="fa-solid fa-map-pin text-cyan-400 text-lg mb-2 block"></i><p class="text-white font-semibold text-sm">Campbell Bay</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CLIENTS ════════ -->
+  <section id="clients" class="relative py-28 bg-navy-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-4">Trusted By</p>
+        <h2 class="font-display font-bold text-4xl lg:text-5xl text-white mb-6">
+          The Islands' Leading <span class="grad-text">Businesses Trust Us</span>
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto">
+          From luxury hospitality to maritime services, our client list spans every major industry in the Andaman &amp; Nicobar Islands.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 stagger">
+        <div class="glass rounded-2xl p-7 glow-card reveal flex items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(99,102,241,0.1));border:1px solid rgba(14,165,233,0.2);">
+            <i class="fa-solid fa-hotel text-cyan-400 text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">Sea Shell Hotel</h4>
+            <p class="text-slate-500 text-xs mt-1">Hospitality — Port Blair</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal flex items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(52,211,153,0.1),rgba(14,165,233,0.1));border:1px solid rgba(52,211,153,0.2);">
+            <i class="fa-solid fa-umbrella-beach text-emerald-400 text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">Aquays Hotels & Resorts Pvt. Ltd.</h4>
+            <p class="text-slate-500 text-xs mt-1">Hospitality &amp; Resorts</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal flex items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(251,113,133,0.1));border:1px solid rgba(251,191,36,0.2);">
+            <i class="fa-solid fa-shop text-yellow-400 text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">Prince Store Trading Pvt. Ltd.</h4>
+            <p class="text-slate-500 text-xs mt-1">Trading &amp; Commerce</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal flex items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(14,165,233,0.1));border:1px solid rgba(99,102,241,0.2);">
+            <i class="fa-solid fa-boxes-stacked text-indigo-400 text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">Karan Trading Pvt. Ltd.</h4>
+            <p class="text-slate-500 text-xs mt-1">Trading &amp; Distribution</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal flex items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(52,211,153,0.1));border:1px solid rgba(14,165,233,0.2);">
+            <i class="fa-solid fa-ship text-cyan-400 text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">SHM Shipcare Pvt. Ltd.</h4>
+            <p class="text-slate-500 text-xs mt-1">Maritime &amp; Shipcare Services</p>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-7 glow-card reveal flex items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(251,113,133,0.1),rgba(99,102,241,0.1));border:1px solid rgba(251,113,133,0.2);">
+            <i class="fa-solid fa-car text-rose-400 text-2xl"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white">Saavi Motor Andaman Pvt. Ltd.</h4>
+            <p class="text-slate-500 text-xs mt-1">Automotive Services</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center reveal">
+        <div class="glass rounded-full px-8 py-4 flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full border-2 border-navy-950 flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">+</div>
+          <p class="text-slate-300 text-sm font-medium">And many more businesses &amp; government institutions across the islands</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CONTACT (NO FORM — just info + CTA) ════════ -->
+  <section id="contact" class="relative py-28 overflow-hidden" style="background:linear-gradient(180deg,#050d1a 0%,#0a1628 60%,#050d1a 100%);">
+    <div class="absolute inset-0 dot-pattern opacity-20"></div>
+    <div class="orb w-80 h-80 bottom-0 right-0 opacity-15" style="background:rgba(99,102,241,0.4);"></div>
+    <div class="orb w-64 h-64 top-0 left-0 opacity-10" style="background:rgba(14,165,233,0.4);"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-16 reveal">
+        <p class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-4">Get In Touch</p>
+        <h2 class="font-display font-bold text-4xl lg:text-5xl text-white mb-6">
+          Ready to Build Your <span class="grad-text">IT Infrastructure?</span>
+        </h2>
+        <p class="text-slate-400 max-w-xl mx-auto">
+          Whether you need a new network, a CCTV system, or an AMC for your existing equipment — our team is ready to assess and deliver.
+        </p>
+      </div>
+
+      <!-- Contact cards + direct CTAs -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 stagger">
+
+        <!-- Phone -->
+        <a href="tel:+919933273136" class="glass-strong rounded-2xl p-8 glow-card reveal flex flex-col items-center text-center gap-4 group cursor-pointer">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,rgba(52,211,153,0.2),rgba(52,211,153,0.05));border:1px solid rgba(52,211,153,0.3);">
+            <i class="fa-solid fa-phone text-emerald-400 text-2xl group-hover:scale-110 transition-transform duration-300"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">Call Us Directly</p>
+            <p class="text-white font-bold text-lg">+91 99332 73136</p>
+            <p class="text-slate-400 text-sm mt-1">+91 3192 294927</p>
+          </div>
+          <span class="btn-primary px-6 py-2.5 rounded-xl text-white text-sm font-semibold w-full flex items-center justify-center gap-2">
+            <i class="fa-solid fa-phone text-xs"></i>
+            <span>Call Now</span>
+          </span>
+        </a>
+
+
+
+        <!-- Visit us -->
+        <div class="glass-strong rounded-2xl p-8 glow-card reveal flex flex-col items-center text-center gap-4">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center" style="background:linear-gradient(135deg,rgba(14,165,233,0.2),rgba(14,165,233,0.05));border:1px solid rgba(14,165,233,0.3);">
+            <i class="fa-solid fa-location-dot text-cyan-400 text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">Visit Our Office</p>
+            <p class="text-white font-bold">IT Solutions</p>
+            <p class="text-slate-400 text-sm mt-1 leading-relaxed">Shop No. 8, Island Arcade Building<br/>Junglighat, Port Blair – 744103</p>
+          </div>
+          <div class="glass rounded-xl px-4 py-2 w-full text-center">
+            <p class="text-xs text-slate-400">Mon–Sat: 9:00 AM – 6:00 PM</p>
+            <p class="text-xs text-emerald-400 mt-1">24/7 AMC Emergency Support</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom CTA banner -->
+      <div class="glass-strong rounded-3xl p-10 reveal text-center relative overflow-hidden">
+        <div class="shimmer-line"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full opacity-10" style="background:radial-gradient(circle,#0ea5e9,transparent);pointer-events:none;"></div>
+        <p class="text-xs font-semibold text-cyan-400 tracking-widest uppercase mb-3">Free Site Assessment Available</p>
+        <h3 class="font-display font-bold text-2xl lg:text-3xl text-white mb-4">
+          Not sure where to start? <span class="grad-text">We'll assess your needs — free of charge.</span>
+        </h3>
+        <p class="text-slate-400 mb-8 max-w-lg mx-auto">
+          Our team will visit your premises, evaluate your current infrastructure, and recommend the right solution with a detailed quote. No obligation.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="tel:+919933273136" class="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center gap-2">
+            <i class="fa-solid fa-phone text-sm"></i>
+            <span>Call +91 99332 73136</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="relative bg-navy-950 border-t border-white/6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="3" width="4" height="18" rx="1" fill="white"/>
+                <rect x="9" y="8" width="4" height="13" rx="1" fill="rgba(255,255,255,0.7)"/>
+                <rect x="16" y="12" width="4" height="9" rx="1" fill="rgba(255,255,255,0.5)"/>
+                <circle cx="19" cy="5" r="3" fill="#22d3ee"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-display font-bold text-white text-lg leading-none">IT <span class="grad-text-cyan">Solutions</span></div>
+              <div class="text-xs text-slate-500 leading-none mt-0.5 tracking-wider">SOLUTIONS AHEAD</div>
+            </div>
+          </div>
+          <p class="text-slate-400 text-sm leading-relaxed mb-5 max-w-xs">
+            Andaman &amp; Nicobar Islands' premier telecom and IT infrastructure service provider. Government Approved System Integrator and BSNL Empaneled Vendor since 2008.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="cred-badge text-xs"><i class="fa-solid fa-shield-check text-cyan-400"></i> Govt. Approved</span>
+            <span class="cred-badge text-xs"><i class="fa-solid fa-tower-cell text-cyan-400"></i> BSNL Empaneled</span>
+            <span class="cred-badge text-xs"><i class="fa-solid fa-receipt text-cyan-400"></i> GST Registered</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Services</h4>
+          <ul class="space-y-3">
+            <li><a href="#services" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-cyan-700"></i>Wireless Communication</a></li>
+            <li><a href="#services" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-cyan-700"></i>Wi-Fi &amp; Hotspot Deployment</a></li>
+            <li><a href="#services" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-cyan-700"></i>CCTV Surveillance</a></li>
+            <li><a href="#services" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-cyan-700"></i>Fire Alarm Systems</a></li>
+            <li><a href="#services" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-cyan-700"></i>IPPBX Communication</a></li>
+            <li><a href="#services" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-cyan-700"></i>Network Infrastructure</a></li>
+            <li><a href="#services" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-cyan-700"></i>AMC Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Contact</h4>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-location-dot text-cyan-500 text-sm mt-0.5 flex-shrink-0"></i>
+              <p class="text-slate-400 text-sm leading-relaxed">Shop No. 8, Island Arcade Building, Junglighat, Port Blair, A&amp;N Islands – 744103</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-phone text-cyan-500 text-sm flex-shrink-0"></i>
+              <a href="tel:+919933273136" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200">+91 99332 73136</a>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-phone text-cyan-500 text-sm flex-shrink-0"></i>
+              <a href="tel:+913192294927" class="text-slate-400 hover:text-cyan-400 text-sm transition-colors duration-200">+91 3192 294927</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="section-line mb-8"></div>
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-slate-500 text-xs">© 2024 IT Solutions. All rights reserved. Shop No. 8, Junglighat, Port Blair.</p>
+        <p class="text-slate-600 text-xs">Telecom Infrastructure · Networking · Security Systems</p>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- ════════ BACK TO TOP ════════ -->
+  <button id="back-top" class="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-xl btn-primary flex items-center justify-center text-white shadow-xl opacity-0 pointer-events-none transition-all duration-300" aria-label="Back to top">
+    <i class="fa-solid fa-chevron-up text-sm"></i>
+  </button>
+
+  <!-- ════════ JAVASCRIPT ════════ -->
+  <script>
+    /* ── Cursor glow ── */
+    const glow = document.getElementById('cursor-glow');
+    let mx = 0, my = 0, gx = 0, gy = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animGlow() {
+      gx += (mx - gx) * 0.08;
+      gy += (my - gy) * 0.08;
+      glow.style.left = gx + 'px';
+      glow.style.top = gy + 'px';
+      requestAnimationFrame(animGlow);
+    }
+    animGlow();
+
+    /* ── Floating particles ── */
+    const particlesEl = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 3 + 1;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random() * 100}%;
+        top:${Math.random() * 100}%;
+        background: rgba(14,165,233,${Math.random() * 0.4 + 0.1});
+        animation: floatOrb ${Math.random() * 8 + 6}s ease-in-out infinite;
+        animation-delay: ${Math.random() * -10}s;
+      `;
+      particlesEl.appendChild(p);
+    }
+
+    /* ── Navbar scroll ── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 30) {
+        navbar.style.background = 'rgba(5,13,26,0.92)';
+        navbar.style.backdropFilter = 'blur(20px)';
+        navbar.style.borderBottom = '1px solid rgba(255,255,255,0.07)';
+        navbar.style.boxShadow = '0 4px 40px rgba(0,0,0,0.4)';
+      } else {
+        navbar.style.background = 'transparent';
+        navbar.style.backdropFilter = 'none';
+        navbar.style.borderBottom = '1px solid transparent';
+        navbar.style.boxShadow = 'none';
+      }
+    });
+
+    /* ── Mobile menu ── */
+    const hamBtn = document.getElementById('ham-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamBtn.addEventListener('click', () => {
+      hamBtn.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+      hamBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }));
+
+    /* ── Typewriter ── */
+    const phrases = ['Digital Infrastructure', 'Telecom Backbone', 'Network Connectivity', 'Security Systems'];
+    let pIdx = 0, cIdx = 0, deleting = false;
+    const twEl = document.getElementById('typewriter-text');
+    function typewrite() {
+      const cur = phrases[pIdx];
+      if (deleting) {
+        twEl.textContent = cur.slice(0, cIdx--);
+        if (cIdx < 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; setTimeout(typewrite, 500); return; }
+      } else {
+        twEl.textContent = cur.slice(0, ++cIdx);
+        if (cIdx === cur.length) { deleting = true; setTimeout(typewrite, 2200); return; }
+      }
+      setTimeout(typewrite, deleting ? 45 : 80);
+    }
+    setTimeout(typewrite, 1200);
+
+    /* ── Scroll reveal ── */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+    /* ── Counter ── */
+    const cntObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        let start = 0;
+        const step = target / (1800 / 16);
+        const timer = setInterval(() => {
+          start += step;
+          if (start >= target) { el.textContent = target + suffix; clearInterval(timer); }
+          else el.textContent = Math.floor(start) + (Math.floor(start) >= target ? suffix : '');
+        }, 16);
+        cntObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-target]').forEach(el => cntObs.observe(el));
+
+    /* ── Service tabs ── */
+    document.querySelectorAll('.service-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.service-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const panel = tab.dataset.panel;
+        const grid = document.getElementById('panel-all');
+        grid.classList.add('active');
+        if (panel === 'all') {
+          grid.querySelectorAll('[data-category]').forEach(c => c.style.display = '');
+        } else {
+          grid.querySelectorAll('[data-category]').forEach(c => {
+            c.style.display = c.dataset.category === panel ? '' : 'none';
+          });
+        }
+      });
+    });
+
+    /* ── Island tooltip ── */
+    function showIslandInfo(name) {
+      const tt = document.getElementById('island-tooltip');
+      tt.textContent = '📍 ' + name;
+      tt.classList.remove('hidden');
+      setTimeout(() => tt.classList.add('hidden'), 2000);
+    }
+
+    /* ── Hero card tilt ── */
+    const heroCard = document.getElementById('hero-card');
+    if (heroCard) {
+      heroCard.parentElement.addEventListener('mousemove', e => {
+        const rect = heroCard.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / rect.width * 8;
+        const dy = (e.clientY - cy) / rect.height * 8;
+        heroCard.style.transform = `perspective(800px) rotateY(${dx}deg) rotateX(${-dy}deg)`;
+      });
+      heroCard.parentElement.addEventListener('mouseleave', () => {
+        heroCard.style.transform = 'perspective(800px) rotateY(0) rotateX(0)';
+      });
+    }
+
+    /* ── Back to top ── */
+    const backTop = document.getElementById('back-top');
+    window.addEventListener('scroll', () => {
+      backTop.style.opacity = window.scrollY > 500 ? '1' : '0';
+      backTop.style.pointerEvents = window.scrollY > 500 ? 'auto' : 'none';
+    });
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ── Active nav highlight ── */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('a.nav-link');
+    const sectionObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.getAttribute('id');
+          navLinks.forEach(l => { l.style.color = l.getAttribute('href') === '#' + id ? '#e2e8f0' : ''; });
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => sectionObs.observe(s));
+  </script>
+
+</body>
+</html>
